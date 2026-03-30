@@ -281,6 +281,23 @@ export default function MainLayout() {
                                 )}
                             </div>
                         ))}
+
+                        <div className="mt-2 flex gap-3">
+                        <button
+                            onClick={() => setShowAuthPopup(true)}
+                            className="px-4 py-2 rounded-full border border-[#d9e7f1] text-sm"
+                        >
+                            Login
+                        </button>
+
+                        <button
+                            onClick={() => navigate("/barcodeGen/gs1digitallink")}
+                            className="px-5 py-2 rounded-full bg-[#1F4B73] text-white text-sm"
+                        >
+                            Generate
+                        </button>
+                        </div>
+                    
                     </div>
                 )}
             </header>

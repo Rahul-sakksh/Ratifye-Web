@@ -51,7 +51,7 @@ const EnhancedCarouselWithCustomizer: React.FC<CarouselProps> = ({ data = [] }) 
     }, [currentIndex, data.length]);
 
     const getImageUrl = (filename: string) =>
-        `https://dlhub.8aiku.com/dmai/download-image/?folder_variable=TMP_IMAGE_FOLDER&filename=${filename}`;
+        `https://dlhub.8aiku.com/gen/download-image?folder_variable=TMP_IMAGE_FOLDER&filename=${filename}`;
 
     const hexToRgb = (hex: string) => {
         const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);

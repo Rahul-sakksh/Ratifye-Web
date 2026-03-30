@@ -1368,7 +1368,17 @@ function AppShell({
                                     )}
                                 </div>
                             ))}
+                       
+                        <button onClick={() => setShowAuthPopup(true)} className="rounded-full border border-[#d9e7f1] px-4 py-2 text-sm font-medium text-slate-700 hover:bg-[#f5f9fc]">
+                            Login
+                        </button>
+                        <button onClick={() => navigate("/barcodeGen/gs1digitallink")} className="rounded-full bg-[#1F4B73] px-5 py-2 text-sm font-semibold text-white shadow-[0_10px_30px_rgba(31,75,115,0.18)] hover:bg-[#183b5a]">
+                            Generate GS1 Barcode
+                        </button>
+          
                         </div>
+
+                        
                     </div>
                 )}
             </header>
