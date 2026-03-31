@@ -1,0 +1,9 @@
+version: "3.9"
+
+services:
+  ratifye-web:
+    build: .
+    container_name: ratifye-web
+    ports:
+      - "7003:7003"
+    restart: always
