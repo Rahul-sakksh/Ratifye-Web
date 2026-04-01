@@ -4,6 +4,9 @@ import AuthPopup from "../../components/authPopup";
 import { useNavigate, useParams } from "react-router-dom";
 import logo from "/src/assets/jpg/RatifyeLogo.jpeg";
 import { ChevronDown, ChevronRight } from "lucide-react";
+import SolutionTabsComponent from "../../components/solutionTabComponent";
+import { a } from "framer-motion/client";
+
 const NAV_ITEMS = [
     { key: "home", label: "Home" },
     { key: "solutions", label: "Solutions" },
@@ -50,6 +53,7 @@ const IMAGE_ASSETS = {
 
 const SOLUTIONS = [
     {
+        pageKey: "gs1",
         slug: "gs1-barcode-generation",
         title: "GS1 Barcode Generation",
         short: "Generate GS1 DataMatrix, QR, and barcode identities for pharmaceutical packaging.",
@@ -66,6 +70,7 @@ const SOLUTIONS = [
         ],
     },
     {
+        pageKey: "authentication",
         slug: "barcode-authentication",
         title: "Pharmaceutical Authentication",
         short: "Verify medicines using scan-based product authentication workflows.",
@@ -82,6 +87,7 @@ const SOLUTIONS = [
         ],
     },
     {
+        pageKey: "serialization",
         slug: "pharma-serialization",
         title: "Serialization",
         short: "Assign unique product identity for stronger traceability and product control.",
@@ -98,6 +104,7 @@ const SOLUTIONS = [
         ],
     },
     {
+        pageKey: "track",
         slug: "track-and-trace",
         title: "Track and Trace",
         short: "Monitor product movement and scan-based visibility across the supply chain.",
@@ -114,6 +121,7 @@ const SOLUTIONS = [
         ],
     },
     {
+            pageKey: "digital",
         slug: "market-diversion-detection",
         title: "Market Diversion",
         short: "Identify suspicious market movement through barcode-linked channel and route validation.",
@@ -135,6 +143,7 @@ const SOLUTIONS = [
         ],
     },
     {
+        pageKey: "warehouse",
         slug: "warehouse-verification",
         title: "Warehouse Verification",
         short: "Enable scan-based validation at warehouse and distribution checkpoints.",
@@ -873,6 +882,15 @@ function Homepage({ setCurrentPage, setActiveSolution }) {
 }
 
 function SolutionsPage({ activeSolution, setActiveSolution }) {
+
+
+    console.log("Active solution:", activeSolution);
+    
+     return (
+        <SolutionTabsComponent pageKey={activeSolution.pageKey} />
+    )
+   
+   
     if (!activeSolution) {
         return (
             // <main className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
@@ -902,6 +920,8 @@ function SolutionsPage({ activeSolution, setActiveSolution }) {
             null
         );
     }
+
+   
 
     return (
         <main>
@@ -1129,7 +1149,7 @@ function AppShell({
     const [showAuthPopup, setShowAuthPopup] = useState(false);
 
     const [open, setOpen] = useState(false);
-        const [mobileSolutionsOpen, setMobileSolutionsOpen] = useState(false);
+    const [mobileSolutionsOpen, setMobileSolutionsOpen] = useState(false);
 
 
     const navigate = useNavigate();
@@ -1236,7 +1256,7 @@ function AppShell({
 
 
                                 {item.label === "Solutions" && open ? (
-                                   <div className="absolute left-1/2 -translate-x-1/2 top-[calc(100%-35px)] mt-2 z-50 w-[980px] overflow-hidden rounded-[32px] border border-slate-200 bg-white/95 p-4 shadow-[0_24px_80px_rgba(15,23,42,0.14)] backdrop-blur-2xl">
+                                    <div className="absolute left-1/2 -translate-x-1/2 top-[calc(100%-35px)] mt-2 z-50 w-[980px] overflow-hidden rounded-[32px] border border-slate-200 bg-white/95 p-4 shadow-[0_24px_80px_rgba(15,23,42,0.14)] backdrop-blur-2xl">
                                         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(14,165,164,0.10),transparent_24%),radial-gradient(circle_at_bottom_right,rgba(31,75,115,0.08),transparent_22%)]" />
 
                                         <div className="relative grid gap-4 lg:grid-cols-[0.34fr_0.66fr]">
@@ -1278,11 +1298,8 @@ function AppShell({
                                                             navigate(`/main/solutions/${page.slug}`);
                                                             setOpen(false);
                                                         }}
-                                                        className={`group rounded-[28px] border p-5 text-left transition ${
-                                                            // current === page.key
-                                                            //   ? "border-slate-300 bg-white shadow-[0_12px_36px_rgba(15,23,42,0.08)]"
-                                                            "border-slate-200 bg-white/80 hover:border-slate-300 hover:bg-white hover:shadow-[0_12px_36px_rgba(15,23,42,0.08)]"
-                                                            }`}
+                                                        className={`group rounded-[28px] border p-5 text-left transition
+                                                            "border-slate-200 bg-white/80  hover:bg-white hover:shadow-[0_12px_36px_rgba(15,23,42,0.08)] ${activeSolution && activeSolution.pageKey === page.key ? "border-[#0EA5A4] bg-white shadow-[0_12px_36px_rgba(14,165,164,0.12)]" : "border-slate-200 bg-white/80 hover:border-slate-300 hover:bg-white hover:shadow-[0_12px_36px_rgba(15,23,42,0.08)]"}`}
                                                     >
                                                         <div className="flex items-start justify-between gap-3">
                                                             <div>
@@ -1337,11 +1354,11 @@ function AppShell({
                                                 setMobileOpen(false);
                                             }
                                         }}
-                                        className="w-full flex items-center justify-between text-left text-sm font-medium text-slate-700"
+                                        className={`w-full flex items-center justify-between text-left text-sm font-medium text-slate-700 ${currentPage === item.key ? 'text-[#1F4B73] font-semibold' : 'hover:text-[#0EA5A4]'}`}
                                     >
                                         <span>{item.label}</span>
                                         {item.key === "solutions" && (
-                                            <ChevronDown 
+                                            <ChevronDown
                                                 className={`h-4 w-4 transition-transform ${mobileSolutionsOpen ? 'rotate-180' : ''}`}
                                             />
                                         )}
@@ -1358,7 +1375,7 @@ function AppShell({
                                                         setMobileOpen(false);
                                                         setMobileSolutionsOpen(false);
                                                     }}
-                                                    className="w-full text-left py-2 px-3 text-sm text-slate-600 hover:text-[#0EA5A4] rounded-lg hover:bg-slate-50"
+                                                    className={`w-full text-left py-2 px-3 text-sm text-slate-600 hover:text-[#0EA5A4] rounded-lg hover:bg-slate-50 ${activeSolution?.slug === page?.slug ? 'bg-slate-100 text-[#0EA5A4]' : ''}`}
                                                 >
                                                     <div className="font-semibold">{page.shortTitle}</div>
                                                     <div className="text-xs text-slate-500 mt-1">{page.subtitle}</div>
@@ -1368,17 +1385,17 @@ function AppShell({
                                     )}
                                 </div>
                             ))}
-                       
-                        <button onClick={() => setShowAuthPopup(true)} className="rounded-full border border-[#d9e7f1] px-4 py-2 text-sm font-medium text-slate-700 hover:bg-[#f5f9fc]">
-                            Login
-                        </button>
-                        <button onClick={() => navigate("/barcodeGen/gs1digitallink")} className="rounded-full bg-[#1F4B73] px-5 py-2 text-sm font-semibold text-white shadow-[0_10px_30px_rgba(31,75,115,0.18)] hover:bg-[#183b5a]">
-                            Generate GS1 Barcode
-                        </button>
-          
+
+                            <button onClick={() => setShowAuthPopup(true)} className="rounded-full border border-[#d9e7f1] px-4 py-2 text-sm font-medium text-slate-700 hover:bg-[#f5f9fc]">
+                                Login
+                            </button>
+                            <button onClick={() => navigate("/barcodeGen/gs1digitallink")} className="rounded-full bg-[#1F4B73] px-5 py-2 text-sm font-semibold text-white shadow-[0_10px_30px_rgba(31,75,115,0.18)] hover:bg-[#183b5a]">
+                                Generate GS1 Barcode
+                            </button>
+
                         </div>
 
-                        
+
                     </div>
                 )}
             </header>
