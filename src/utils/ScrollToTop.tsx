@@ -6,19 +6,20 @@ const ScrollToTop: React.FC = () => {
   const previousPath = useRef<string>("");
 
   useEffect(() => {
-  const container = document.getElementById("main-container");
 
-  if (container) {
-    container.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  } else {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }
+    const isBarcodeRoute = pathname.startsWith("/barcodeGen");
+    const wasBarcodeRoute = previousPath.current.startsWith("/barcodeGen");
 
-  previousPath.current = pathname;
-}, [pathname]);
+    if (!wasBarcodeRoute || isBarcodeRoute !== wasBarcodeRoute) {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth",
+      });
+    }
+
+    previousPath.current = pathname;
+  }, [pathname]);
 
   return null;
 };
